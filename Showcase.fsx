@@ -6,6 +6,7 @@ open Spectre.Console
 open FsSpectre
 
 let generateException () = try raise (InvalidOperationException("This is invalid!")) with | ex -> ex
+let pods = [| "a"; "b"; "c" |]
 
 table {
     title_text "[u][yellow]Spectre.Console[/] [b]Features[/][/]"
@@ -185,5 +186,8 @@ table {
         "Tables, Grids, Trees, Progress bars, Status, Bar charts, Calendars, Figlet, Images, Text prompts, List boxes, Separators, Pretty exceptions, Canvas, CLI parsing"
     |]
     empty_row
+    rows_text pods (fun s -> [| markup { text ("[blue]"+s+"[/]") } |])
+    rows_text ["pods"; "pwet"] (fun s -> [| markup { text ("[blue]"+s+"[/]") } |])
+
 }
 |> AnsiConsole.Write

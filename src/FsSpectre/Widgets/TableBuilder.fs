@@ -30,6 +30,10 @@ module TableBuilder =
 
     type TableBuilder() =
         member __.Yield _ = TableConfig.Default
+        // member __.Yield () = TableConfig.Default
+        // member __.Yield (text: string) = TableTitle(text)
+
+        // member __.Zero() = TableConfig.Default
 
         member __.Run(config: TableConfig) =
             let result = Table()
@@ -124,20 +128,36 @@ module TableBuilder =
             { config with
                 Rows = Array.append config.Rows [| columns |] }
 
-        member __.For(config: TableConfig, coll: IRenderable array array) =
-            { config with
-                Rows = Array.append config.Rows coll}
-
-        member __.Combine(e1, e2) = fun () -> e2
-
-        member __.Delay f = fun () -> f
-
         [<CustomOperation "row_text">]
         member __.RowText(config: TableConfig, columns: string array) =
             let markups = columns |> Array.map Markup |> Array.map (fun x -> x :> IRenderable)
 
             { config with
                 Rows = Array.append config.Rows [| markups |] }
+                
+        // member __.For(config: TableConfig, coll: IRenderable array array) =
+        //     { config with
+        //         Rows = Array.append config.Rows coll}
 
+        // for pat in expr do cexpr	     =>      b.For(expr, (fun pat -> cexpr))
+        // member __.For(config: TableConfig, coll: IRenderable array array) =
+        //     { config with
+        //         Rows = Array.append config.Rows coll}
+
+        // member __.Combine(e1: TableConfig, e2: TableConfig) =
+        //     { e1 with 
+        //         Rows = Array.append e1.Rows e2.Rows}
+
+        // member __.Delay f = f()
+
+        // [<CustomOperation "row">]
+        // member __.Rows(config: TableConfig, columns: IRenderable array) =
+        //     { config with
+        //         Rows = Array.append config.Rows [| columns |] }
+
+        [<CustomOperation "rows_text">]
+        member __.RowsText(config: TableConfig, columns: string array, (f: string -> IRenderable array)) =
+            { config with
+                Rows = Array.append config.Rows (columns |> Array.map f) }
 
     let table = TableBuilder()
