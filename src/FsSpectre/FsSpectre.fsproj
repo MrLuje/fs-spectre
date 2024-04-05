@@ -21,7 +21,6 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/galassie/fs-spectre</RepositoryUrl>
-    
     <!-- SourceLink settings -->
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -56,6 +55,7 @@
     <Compile Include="Widgets/TableBuilder.fs" />
     <Compile Include="Widgets/CalendarEventBuilder.fs" />
     <Compile Include="Widgets/CalendarBuilder.fs" />
+    <Compile Include="Widgets\Test.fs" />
     <Compile Include="Extras/ColorBox.fs" />
   </ItemGroup>
   <ItemGroup>

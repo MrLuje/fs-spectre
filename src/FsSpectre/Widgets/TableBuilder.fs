@@ -124,6 +124,14 @@ module TableBuilder =
             { config with
                 Rows = Array.append config.Rows [| columns |] }
 
+        member __.For(config: TableConfig, coll: IRenderable array array) =
+            { config with
+                Rows = Array.append config.Rows coll}
+
+        member __.Combine(e1, e2) = fun () -> e2
+
+        member __.Delay f = fun () -> f
+
         [<CustomOperation "row_text">]
         member __.RowText(config: TableConfig, columns: string array) =
             let markups = columns |> Array.map Markup |> Array.map (fun x -> x :> IRenderable)
